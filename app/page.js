@@ -58,7 +58,7 @@ const PROJECTS = [
   {
     title: "JibonDaak",
     desc: "Emergency ambulance service platform with live tracking, hospital pre-arrival alerts, and digital triage reports.",
-    tech: ["React.js", "Next.js", "Firebase"],
+    tech: ["React.js", "Next.js", "monodb"],
     link: "https://github.com/Abdullah-Al-Mahmud777",
     live: "https://staging-jibondaak.vercel.app/",
     color: "#22c55e",
@@ -91,14 +91,11 @@ const SOCIAL = [
 ];
 
 export default function Home() {
-  const [mounted, setMounted] = useState(false);
-  const [activeNav, setActiveNav] = useState("Home");
-  const [scrolled, setScrolled] = useState(false);
+  const [activeNav, setActiveNav] = useState("Home");  const [scrolled, setScrolled] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [typed, setTyped] = useState("");
 
-  useEffect(() => { setMounted(true); }, []);
-  const roles = ["Full Stack Developer", "MERN Stack Expert", "React.js Developer", "Node.js Engineer"];
+  const roles = ["Full Stack Developer", "MERN Stack devloper", "React.js Developer", "Node.js Engineer","php/laravel"];
   const roleIndex = useRef(0);
   const charIndex = useRef(0);
   const deleting = useRef(false);
@@ -142,10 +139,6 @@ export default function Home() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  if (!mounted) return (
-    <div style={{ backgroundColor: "#050510", minHeight: "100vh" }} />
-  );
 
   return (
     <div style={{ backgroundColor: "#050510", minHeight: "100vh", color: "#e2e8f0" }} suppressHydrationWarning>
@@ -273,105 +266,56 @@ export default function Home() {
       )}
 
       {/* HERO */}
-      <section id="home" className="hero-bg dot-grid hero-content" style={{
+      <section id="home" className="hero-bg dot-grid" style={{
         minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center",
         padding: "6rem 1.5rem 4rem", position: "relative", overflow: "hidden",
       }}>
-        {/* bg orbs */}
         <div style={{ position: "absolute", top: "15%", left: "5%", width: "300px", height: "300px", borderRadius: "50%", background: "radial-gradient(circle, rgba(99,102,241,0.15), transparent)", filter: "blur(40px)", pointerEvents: "none" }} />
         <div style={{ position: "absolute", bottom: "20%", right: "5%", width: "250px", height: "250px", borderRadius: "50%", background: "radial-gradient(circle, rgba(168,85,247,0.12), transparent)", filter: "blur(40px)", pointerEvents: "none" }} />
 
-        <div style={{ maxWidth: "1100px", width: "100%", position: "relative", zIndex: 1, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem", alignItems: "center" }} className="hero-two-col">
-
-          {/* LEFT — text */}
-          <div style={{ textAlign: "left" }} className="hero-text-col">
-            <div style={{
-              display: "inline-flex", alignItems: "center", gap: "8px",
-              background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.3)",
-              borderRadius: "50px", padding: "0.4rem 1rem", marginBottom: "1.5rem",
-              fontSize: "0.82rem", color: "#a5b4fc",
-            }}>
-              <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#22c55e", display: "inline-block" }} />
-              Available for work
-            </div>
-
-            <h1 className="hero-title" style={{ fontSize: "clamp(2rem, 4vw, 3.8rem)", fontWeight: 800, lineHeight: 1.1, marginBottom: "0.8rem" }}>
-              Hi, I'm{" "}
-              <span className="gradient-text">Abdullah<br />Al Mahmud</span>
-            </h1>
-
-            <div className="hero-role" style={{ fontSize: "clamp(1rem, 2vw, 1.4rem)", fontWeight: 600, color: "#94a3b8", marginBottom: "1.2rem", minHeight: "2rem" }}>
-              <span style={{ color: "#a5b4fc" }}>{typed}</span>
-              <span style={{ color: "#6366f1" }}>|</span>
-            </div>
-
-            <p className="hero-desc" style={{ color: "#64748b", fontSize: "clamp(0.85rem, 1.5vw, 0.98rem)", lineHeight: 1.8, marginBottom: "2rem", maxWidth: "480px" }}>
-              Passionate about coding, constantly learning, and building projects that make an impact.
-              Specialized in MERN stack with a focus on scalable, user-friendly applications.
-            </p>
-
-            <div className="hero-btns" style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap" }}>
-              <a href="#projects" className="btn-primary" style={{ padding: "0.8rem 1.6rem", borderRadius: "10px", color: "#fff", textDecoration: "none", fontWeight: 600, fontSize: "0.9rem" }}>View My Work</a>
-              <a href="https://www.linkedin.com/in/abdullah-al-mahmud-357566233/" target="_blank" rel="noopener noreferrer"
-                style={{ padding: "0.8rem 1.6rem", borderRadius: "10px", textDecoration: "none", fontWeight: 600, fontSize: "0.9rem", background: "#0a66c2", color: "#fff", display: "inline-block" }}>
-                💼 LinkedIn
-              </a>
-              <a href="#contact" className="btn-secondary" style={{ padding: "0.8rem 1.6rem", borderRadius: "10px", textDecoration: "none", fontWeight: 600, fontSize: "0.9rem" }}>Contact</a>
-              <a href="/cv.pdf" download style={{ padding: "0.8rem 1.6rem", borderRadius: "10px", textDecoration: "none", fontWeight: 600, fontSize: "0.9rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.15)", color: "#e2e8f0", display: "inline-flex", alignItems: "center", gap: "6px" }}>⬇️ CV</a>
-            </div>
-
-            <div className="stats-row" style={{ display: "flex", gap: "1.2rem", marginTop: "2.5rem", flexWrap: "wrap" }}>
-              {[{ num: "2+", label: "Years Exp" }, { num: "10+", label: "Projects" }, { num: "5+", label: "Technologies" }].map(s => (
-                <div key={s.label} className="stat-card" style={{ minWidth: "90px" }}>
-                  <div className="gradient-text" style={{ fontSize: "1.6rem", fontWeight: 800 }}>{s.num}</div>
-                  <div style={{ color: "#64748b", fontSize: "0.75rem", marginTop: "2px" }}>{s.label}</div>
-                </div>
-              ))}
-            </div>
+        <div style={{ maxWidth: "800px", width: "100%", position: "relative", zIndex: 1, textAlign: "center" }}>
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: "8px",
+            background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.3)",
+            borderRadius: "50px", padding: "0.4rem 1rem", marginBottom: "1.5rem",
+            fontSize: "0.82rem", color: "#a5b4fc",
+          }}>
+            <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#22c55e", display: "inline-block" }} />
+            Available for work
           </div>
 
-          {/* RIGHT — banner image */}
-          <div className="hero-img-col" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <div className="float" style={{
-              position: "relative", width: "100%", maxWidth: "420px",
-            }}>
-              {/* Glow behind image */}
-              <div style={{
-                position: "absolute", inset: "-20px",
-                background: "radial-gradient(ellipse, rgba(99,102,241,0.25), transparent 70%)",
-                borderRadius: "32px", filter: "blur(20px)",
-              }} />
-              {/* Image card */}
-              <div style={{
-                borderRadius: "28px", overflow: "hidden",
-                border: "2px solid rgba(99,102,241,0.3)",
-                boxShadow: "0 30px 80px rgba(99,102,241,0.25)",
-                position: "relative", aspectRatio: "3/4",
-              }}>
-                <img
-                  src="/profile.jpg"
-                  alt="Abdullah Al Mahmud"
-                  onError={e => {
-                    e.target.style.display = "none";
-                    e.target.parentNode.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(168,85,247,0.2));font-size:8rem">👨‍💻</div>';
-                  }}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }}
-                />
-                {/* Overlay badge */}
-                <div style={{
-                  position: "absolute", bottom: "16px", left: "50%", transform: "translateX(-50%)",
-                  background: "rgba(5,5,16,0.85)", backdropFilter: "blur(10px)",
-                  border: "1px solid rgba(99,102,241,0.4)",
-                  borderRadius: "50px", padding: "0.5rem 1.2rem",
-                  display: "flex", alignItems: "center", gap: "8px", whiteSpace: "nowrap",
-                }}>
-                  <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#22c55e", display: "inline-block" }} />
-                  <span style={{ color: "#e2e8f0", fontSize: "0.82rem", fontWeight: 600 }}>Full Stack Developer</span>
-                </div>
+          <h1 style={{ fontSize: "clamp(2rem, 6vw, 4rem)", fontWeight: 800, lineHeight: 1.1, marginBottom: "0.8rem" }}>
+            Hi, I'm <span className="gradient-text">Abdullah Al Mahmud</span>
+          </h1>
+
+          <div style={{ fontSize: "clamp(1rem, 3vw, 1.6rem)", fontWeight: 600, color: "#94a3b8", marginBottom: "1.2rem", minHeight: "2.2rem" }}>
+            <span style={{ color: "#a5b4fc" }}>{typed}</span>
+            <span style={{ color: "#6366f1" }}>|</span>
+          </div>
+
+          <p style={{ color: "#64748b", fontSize: "clamp(0.88rem, 2vw, 1rem)", lineHeight: 1.8, maxWidth: "580px", margin: "0 auto 2rem" }}>
+            Passionate about coding, constantly learning, and building projects that make an impact.
+            Specialized in MERN stack with a focus on scalable, user-friendly applications.
+          </p>
+
+          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+            <a href="#projects" className="btn-primary" style={{ padding: "0.8rem 2rem", borderRadius: "10px", color: "#fff", textDecoration: "none", fontWeight: 600, fontSize: "0.95rem" }}>View My Work</a>
+            <a href="https://www.linkedin.com/in/abdullah-al-mahmud-357566233/" target="_blank" rel="noopener noreferrer"
+              style={{ padding: "0.8rem 2rem", borderRadius: "10px", textDecoration: "none", fontWeight: 600, fontSize: "0.95rem", background: "#0a66c2", color: "#fff", display: "inline-block" }}>
+              💼 LinkedIn
+            </a>
+            <a href="#contact" className="btn-secondary" style={{ padding: "0.8rem 2rem", borderRadius: "10px", textDecoration: "none", fontWeight: 600, fontSize: "0.95rem" }}>Contact</a>
+            <a href="/cv.pdf" download style={{ padding: "0.8rem 2rem", borderRadius: "10px", textDecoration: "none", fontWeight: 600, fontSize: "0.95rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.15)", color: "#e2e8f0", display: "inline-flex", alignItems: "center", gap: "6px" }}>⬇️ CV</a>
+          </div>
+
+          <div style={{ display: "flex", gap: "1.5rem", justifyContent: "center", marginTop: "3.5rem", flexWrap: "wrap" }}>
+            {[{ num: "2+", label: "Years Experience" }, { num: "10+", label: "Projects Built" }, { num: "5+", label: "Technologies" }].map(s => (
+              <div key={s.label} className="stat-card" style={{ minWidth: "110px" }}>
+                <div className="gradient-text" style={{ fontSize: "1.8rem", fontWeight: 800 }}>{s.num}</div>
+                <div style={{ color: "#64748b", fontSize: "0.78rem", marginTop: "4px" }}>{s.label}</div>
               </div>
-            </div>
+            ))}
           </div>
-
         </div>
       </section>
 
@@ -618,6 +562,95 @@ export default function Home() {
               style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "0.75rem 1.8rem", borderRadius: "10px", textDecoration: "none", fontWeight: 600, fontSize: "0.92rem", background: "#0a66c2", color: "#fff" }}>
               💼 Work & Progress on LinkedIn
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* WORK PROGRESS */}
+      <section style={{ padding: "5rem 1.5rem", background: "rgba(99,102,241,0.02)", borderTop: "1px solid rgba(99,102,241,0.08)", borderBottom: "1px solid rgba(99,102,241,0.08)" }}>
+        <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "3rem" }}>
+            <p style={{ color: "#6366f1", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "0.5rem" }}>Currently Working On</p>
+            <h2 style={{ fontSize: "2rem", fontWeight: 700, background: "linear-gradient(135deg, #6366f1, #a855f7)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Work & Progress</h2>
+            <p style={{ color: "#64748b", fontSize: "0.92rem", marginTop: "0.5rem" }}>Follow my journey on LinkedIn & GitHub</p>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem", marginBottom: "2.5rem" }}>
+            {[
+              {
+                platform: "GitHub",
+                icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>,
+                color: "#e2e8f0",
+                bg: "rgba(255,255,255,0.05)",
+                border: "rgba(255,255,255,0.1)",
+                href: "https://github.com/Abdullah-Al-Mahmud777",
+                handle: "@Abdullah-Al-Mahmud777",
+                desc: "Open source projects, code contributions, and daily commits. See my repositories and development activity.",
+                stats: [{ label: "Repositories", val: "10+" }, { label: "Languages", val: "5+" }],
+              },
+              {
+                platform: "LinkedIn",
+                icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>,
+                color: "#60a5fa",
+                bg: "rgba(10,102,194,0.1)",
+                border: "rgba(10,102,194,0.3)",
+                href: "https://www.linkedin.com/in/abdullah-al-mahmud-357566233/",
+                handle: "Abdullah Al Mahmud",
+                desc: "Professional updates, project showcases, work experience, and networking. Connect with me professionally.",
+                stats: [{ label: "Experience", val: "2+ yrs" }, { label: "Skills", val: "MERN" }],
+              },
+            ].map(p => (
+              <a key={p.platform} href={p.href} target="_blank" rel="noopener noreferrer"
+                style={{
+                  background: p.bg, border: `1px solid ${p.border}`,
+                  borderRadius: "16px", padding: "1.8rem", textDecoration: "none",
+                  display: "block", transition: "all 0.3s",
+                }}
+                onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = `0 20px 40px ${p.border}`; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1rem" }}>
+                  <div style={{ color: p.color, display: "flex" }}>{p.icon}</div>
+                  <div>
+                    <div style={{ color: p.color, fontWeight: 700, fontSize: "1rem" }}>{p.platform}</div>
+                    <div style={{ color: "#64748b", fontSize: "0.78rem" }}>{p.handle}</div>
+                  </div>
+                  <div style={{ marginLeft: "auto", color: p.color, fontSize: "1.2rem" }}>↗</div>
+                </div>
+                <p style={{ color: "#94a3b8", fontSize: "0.87rem", lineHeight: 1.7, marginBottom: "1.2rem" }}>{p.desc}</p>
+                <div style={{ display: "flex", gap: "1rem" }}>
+                  {p.stats.map(s => (
+                    <div key={s.label} style={{ background: "rgba(255,255,255,0.03)", borderRadius: "8px", padding: "0.5rem 0.8rem", textAlign: "center" }}>
+                      <div style={{ color: p.color, fontWeight: 700, fontSize: "0.95rem" }}>{s.val}</div>
+                      <div style={{ color: "#64748b", fontSize: "0.72rem" }}>{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </a>
+            ))}
+          </div>
+
+          {/* Progress bars */}
+          <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(99,102,241,0.15)", borderRadius: "16px", padding: "1.8rem" }}>
+            <h3 style={{ color: "#e2e8f0", fontWeight: 700, fontSize: "1rem", marginBottom: "1.5rem" }}>🚀 Current Development Focus</h3>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
+              {[
+                { label: "JibonDaak — Emergency Ambulance Platform", progress: 65, color: "#22c55e", status: "In Progress" },
+                { label: "MERN Stack Projects", progress: 85, color: "#6366f1", status: "Active" },
+                { label: "Open Source Contributions", progress: 40, color: "#a855f7", status: "Ongoing" },
+              ].map(item => (
+                <div key={item.label}>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.4rem" }}>
+                    <span style={{ color: "#e2e8f0", fontSize: "0.88rem", fontWeight: 500 }}>{item.label}</span>
+                    <span style={{ color: item.color, fontSize: "0.78rem", fontWeight: 600, background: `${item.color}15`, padding: "0.1rem 0.6rem", borderRadius: "20px" }}>{item.status}</span>
+                  </div>
+                  <div style={{ background: "rgba(255,255,255,0.05)", borderRadius: "4px", height: "6px", overflow: "hidden" }}>
+                    <div style={{ height: "100%", width: `${item.progress}%`, background: `linear-gradient(90deg, ${item.color}, ${item.color}99)`, borderRadius: "4px", transition: "width 1s ease" }} />
+                  </div>
+                  <div style={{ textAlign: "right", color: "#64748b", fontSize: "0.72rem", marginTop: "3px" }}>{item.progress}%</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
