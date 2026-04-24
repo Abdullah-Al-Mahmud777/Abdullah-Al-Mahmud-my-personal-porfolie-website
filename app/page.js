@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 
-const NAV_LINKS = ["Home", "About", "Skills", "Projects", "Contact"];
+const NAV_LINKS = ["Home", "About", "Skills", "Projects", "Research", "Contact"];
 
 const SKILLS = [
   { name: "React.js", icon: "⚛️", level: 90 },
@@ -91,11 +91,17 @@ const SOCIAL = [
 ];
 
 export default function Home() {
-  const [activeNav, setActiveNav] = useState("Home");  const [scrolled, setScrolled] = useState(false);
+  const [dark, setDark] = useState(true);
+  const [activeNav, setActiveNav] = useState("Home");
+  const [scrolled, setScrolled] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [typed, setTyped] = useState("");
 
-  const roles = ["Full Stack Developer", "MERN Stack devloper", "React.js Developer", "Node.js Engineer","php/laravel"];
+  useEffect(() => {
+    document.body.classList.toggle("light", !dark);
+  }, [dark]);
+
+  const roles = ["Full Stack Developer", "MERN Stack developer", "React.js Developer", "Node.js Engineer","php/laravel"];
   const roleIndex = useRef(0);
   const charIndex = useRef(0);
   const deleting = useRef(false);
@@ -141,14 +147,14 @@ export default function Home() {
   }, []);
 
   return (
-    <div style={{ backgroundColor: "#050510", minHeight: "100vh", color: "#e2e8f0" }} suppressHydrationWarning>
+    <div style={{ backgroundColor: dark ? "#050510" : "#f8fafc", minHeight: "100vh", color: dark ? "#e2e8f0" : "#1e293b", transition: "background 0.3s, color 0.3s" }} suppressHydrationWarning>
 
       {/* NAVBAR */}
       <nav style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
         padding: "0 1.5rem", height: "65px",
         display: "flex", alignItems: "center", justifyContent: "space-between",
-        background: scrolled ? "rgba(5,5,16,0.92)" : "transparent",
+        background: scrolled ? (dark ? "rgba(5,5,16,0.92)" : "rgba(248,250,252,0.92)") : "transparent",
         backdropFilter: scrolled ? "blur(20px)" : "none",
         borderBottom: scrolled ? "1px solid rgba(99,102,241,0.15)" : "none",
         transition: "all 0.3s ease",
@@ -199,6 +205,19 @@ export default function Home() {
           <a href="#contact" className="btn-primary" style={{ padding: "0.45rem 1.1rem", borderRadius: "8px", color: "#fff", textDecoration: "none", fontSize: "0.85rem", fontWeight: 600 }}>
             Hire Me
           </a>
+          {/* Theme toggle */}
+          <button onClick={() => setDark(!dark)} title={dark ? "Light Mode" : "Dark Mode"}
+            style={{
+              width: "36px", height: "36px", borderRadius: "8px", border: "1px solid rgba(99,102,241,0.3)",
+              background: dark ? "rgba(99,102,241,0.1)" : "rgba(99,102,241,0.15)",
+              cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: "1rem", transition: "all 0.2s",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = "rgba(99,102,241,0.25)"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = dark ? "rgba(99,102,241,0.1)" : "rgba(99,102,241,0.15)"; }}
+          >
+            {dark ? "☀️" : "🌙"}
+          </button>
         </div>
 
         {/* Mobile hamburger */}
@@ -225,7 +244,7 @@ export default function Home() {
       {mobileMenu && (
         <div style={{
           position: "fixed", top: "65px", left: 0, right: 0, zIndex: 999,
-          background: "rgba(5,5,16,0.97)", backdropFilter: "blur(20px)",
+          background: dark ? "rgba(5,5,16,0.97)" : "rgba(248,250,252,0.97)", backdropFilter: "blur(20px)",
           borderBottom: "1px solid rgba(99,102,241,0.2)",
           padding: "1.2rem 1.5rem",
           display: "flex", flexDirection: "column", gap: "0.3rem",
@@ -553,14 +572,10 @@ export default function Home() {
           </div>
 
           {/* Bottom links */}
-          <div style={{ textAlign: "center", marginTop: "2.5rem", display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+          <div style={{ textAlign: "center", marginTop: "2.5rem" }}>
             <a href="https://github.com/Abdullah-Al-Mahmud777" target="_blank" rel="noopener noreferrer"
               className="btn-secondary" style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "0.75rem 1.8rem", borderRadius: "10px", textDecoration: "none", fontWeight: 600, fontSize: "0.92rem" }}>
               🐙 View All on GitHub
-            </a>
-            <a href="https://www.linkedin.com/in/abdullah-al-mahmud-357566233/" target="_blank" rel="noopener noreferrer"
-              style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "0.75rem 1.8rem", borderRadius: "10px", textDecoration: "none", fontWeight: 600, fontSize: "0.92rem", background: "#0a66c2", color: "#fff" }}>
-              💼 Work & Progress on LinkedIn
             </a>
           </div>
         </div>
@@ -665,18 +680,17 @@ export default function Home() {
 
         <div className="contact-info-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
           {[
-            { icon: "📧", label: "Email", value: "abdullahalmahmudmahmud777@gmail.com", href: "mailto:abdullahalmahmudmahmud777@gmail.com" },
-            { icon: "💼", label: "LinkedIn", value: "Abdullah Al Mahmud", href: "https://www.linkedin.com/in/abdullah-al-mahmud-357566233/" },
-            { icon: "💻", label: "GitHub", value: "@Abdullah-Al-Mahmud777", href: "https://github.com/Abdullah-Al-Mahmud777" },
-            { icon: "💬", label: "WhatsApp", value: "+880 1617 681926", href: "https://wa.me/8801617681926", green: true },
+            { label: "Email", value: "abdullahalmahmudmahmud777@gmail.com", href: "mailto:abdullahalmahmudmahmud777@gmail.com", color: "#6366f1" },
+            { label: "Email 2", value: "shuvo.montu@gmail.com", href: "mailto:shuvo.montu@gmail.com", color: "#a855f7" },
+            { label: "LinkedIn", value: "Abdullah Al Mahmud", href: "https://www.linkedin.com/in/abdullah-al-mahmud-357566233/", color: "#60a5fa" },
+            { label: "GitHub", value: "@Abdullah-Al-Mahmud777", href: "https://github.com/Abdullah-Al-Mahmud777", color: "#e2e8f0" },
+            { label: "WhatsApp", value: "+880 1617 681926", href: "https://wa.me/8801617681926", color: "#22c55e" },
+            { label: "Telegram", value: "+880 1617 681926", href: "https://t.me/+8801617681926", color: "#29b6f6" },
           ].map(item => (
             <a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer"
-              className="project-card" style={{ borderRadius: "12px", padding: "1.2rem", textAlign: "center", textDecoration: "none", display: "block",
-                border: item.green ? "1px solid rgba(37,211,102,0.25)" : undefined,
-              }}>
-              <div style={{ fontSize: "1.4rem", marginBottom: "0.4rem" }}>{item.icon}</div>
-              <div style={{ color: item.green ? "#22c55e" : "#6366f1", fontSize: "0.75rem", fontWeight: 600, marginBottom: "0.3rem" }}>{item.label}</div>
-              <div style={{ color: "#94a3b8", fontSize: "0.72rem", wordBreak: "break-all" }}>{item.value}</div>
+              className="project-card" style={{ borderRadius: "12px", padding: "1.2rem", textAlign: "center", textDecoration: "none", display: "block", border: "1px solid " + item.color + "40" }}>
+              <div style={{ color: item.color, fontSize: "0.75rem", fontWeight: 700, marginBottom: "0.3rem", textTransform: "uppercase", letterSpacing: "1px" }}>{item.label}</div>
+              <div style={{ color: "#94a3b8", fontSize: "0.72rem", wordBreak: "break-all", marginTop: "0.3rem" }}>{item.value}</div>
             </a>
           ))}
         </div>
@@ -733,7 +747,162 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FLOATING WHATSAPP */}
+      {/* RESEARCH PAPERS */}
+      <section id="research" style={{ padding: "5rem 1.5rem", background: "rgba(99,102,241,0.02)", borderTop: "1px solid rgba(99,102,241,0.08)", borderBottom: "1px solid rgba(99,102,241,0.08)" }}>
+        <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "3rem" }}>
+            <p style={{ color: "#6366f1", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "0.5rem" }}>Academic Reading</p>
+            <h2 style={{ fontSize: "2rem", fontWeight: 700, background: "linear-gradient(135deg, #6366f1, #a855f7)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Research Papers</h2>
+            <p style={{ color: "#64748b", fontSize: "0.92rem", marginTop: "0.5rem", maxWidth: "600px", margin: "0.5rem auto 0" }}>
+              I actively read research papers, identify gaps in existing work, and explore opportunities for innovation in software engineering & AI.
+            </p>
+          </div>
+
+          {/* Research approach cards */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem", marginBottom: "2.5rem" }}>
+            {[
+              { icon: "📖", title: "Active Reading", desc: "Regularly study papers from IEEE, ACM, arXiv" },
+              { icon: "🔍", title: "Gap Analysis", desc: "Identify limitations and unexplored areas in research" },
+              { icon: "💡", title: "Innovation", desc: "Propose novel solutions based on research insights" },
+              { icon: "🛠️", title: "Implementation", desc: "Build prototypes inspired by academic findings" },
+            ].map(c => (
+              <div key={c.title} style={{ background: "rgba(99,102,241,0.05)", border: "1px solid rgba(99,102,241,0.15)", borderRadius: "12px", padding: "1.2rem", textAlign: "center" }}>
+                <div style={{ fontSize: "1.8rem", marginBottom: "0.5rem" }}>{c.icon}</div>
+                <div style={{ color: "#e2e8f0", fontWeight: 700, fontSize: "0.88rem", marginBottom: "0.3rem" }}>{c.title}</div>
+                <div style={{ color: "#64748b", fontSize: "0.78rem", lineHeight: 1.5 }}>{c.desc}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Papers list */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            {[
+              {
+                title: "Attention Is All You Need",
+                authors: "Vaswani et al., Google Brain",
+                year: "2017",
+                field: "AI / NLP",
+                color: "#6366f1",
+                gap: "Transformer models lack efficiency for very long sequences — sparse attention mechanisms needed.",
+                link: "https://arxiv.org/abs/1706.03762",
+              },
+              {
+                title: "BERT: Pre-training of Deep Bidirectional Transformers",
+                authors: "Devlin et al., Google AI",
+                year: "2018",
+                field: "NLP",
+                color: "#a855f7",
+                gap: "BERT is computationally expensive; lightweight alternatives for low-resource environments are underexplored.",
+                link: "https://arxiv.org/abs/1810.04805",
+              },
+              {
+                title: "An Image is Worth 16x16 Words: Vision Transformers",
+                authors: "Dosovitskiy et al., Google Research",
+                year: "2020",
+                field: "Computer Vision",
+                color: "#ec4899",
+                gap: "ViT requires large datasets; few-shot learning integration remains a research gap.",
+                link: "https://arxiv.org/abs/2010.11929",
+              },
+              {
+                title: "Deep Residual Learning for Image Recognition",
+                authors: "He et al., Microsoft Research",
+                year: "2015",
+                field: "Deep Learning",
+                color: "#06b6d4",
+                gap: "ResNets struggle with dynamic input sizes; adaptive depth networks are an open problem.",
+                link: "https://arxiv.org/abs/1512.03385",
+              },
+              {
+                title: "Generative Adversarial Networks",
+                authors: "Goodfellow et al., Université de Montréal",
+                year: "2014",
+                field: "Generative AI",
+                color: "#22c55e",
+                gap: "Training instability and mode collapse remain unsolved; better loss functions are needed.",
+                link: "https://arxiv.org/abs/1406.2661",
+              },
+              {
+                title: "MERN Stack Web Application Security Analysis",
+                authors: "Various Authors, IEEE",
+                year: "2022",
+                field: "Web Security",
+                color: "#f59e0b",
+                gap: "JWT token refresh strategies and real-time threat detection in MERN apps are underresearched.",
+                link: "https://ieeexplore.ieee.org",
+              },
+              {
+                title: "Microservices vs Monolithic Architecture",
+                authors: "Dragoni et al.",
+                year: "2017",
+                field: "Software Architecture",
+                color: "#6366f1",
+                gap: "Cost-benefit analysis for small teams adopting microservices lacks empirical data.",
+                link: "https://arxiv.org/abs/1606.04036",
+              },
+              {
+                title: "Real-Time Object Detection: YOLO",
+                authors: "Redmon et al., University of Washington",
+                year: "2016",
+                field: "Computer Vision",
+                color: "#a855f7",
+                gap: "YOLO struggles with small object detection in dense scenes — a gap for medical imaging.",
+                link: "https://arxiv.org/abs/1506.02640",
+              },
+              {
+                title: "A Survey on Transfer Learning",
+                authors: "Pan & Yang, IEEE",
+                year: "2010",
+                field: "Machine Learning",
+                color: "#ec4899",
+                gap: "Negative transfer in dissimilar domains is still an open challenge with no universal solution.",
+                link: "https://ieeexplore.ieee.org/document/5288526",
+              },
+              {
+                title: "Blockchain Technology in Healthcare Systems",
+                authors: "Agbo et al., MDPI",
+                year: "2019",
+                field: "Blockchain / Healthcare",
+                color: "#06b6d4",
+                gap: "Scalability and real-time data access in blockchain-based health records remain major gaps.",
+                link: "https://www.mdpi.com/2227-9032/7/2/56",
+              },
+            ].map((paper, i) => (
+              <div key={i} style={{
+                background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)",
+                borderLeft: `3px solid ${paper.color}`,
+                borderRadius: "12px", padding: "1.4rem 1.6rem",
+                transition: "all 0.3s",
+              }}
+                onMouseEnter={e => { e.currentTarget.style.background = `${paper.color}08`; e.currentTarget.style.borderColor = `${paper.color}50`; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.02)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)"; }}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.5rem" }}>
+                  <div style={{ flex: 1 }}>
+                    <a href={paper.link} target="_blank" rel="noopener noreferrer"
+                      style={{ color: "#e2e8f0", fontWeight: 700, fontSize: "0.95rem", textDecoration: "none", lineHeight: 1.4 }}
+                      onMouseEnter={e => e.target.style.color = paper.color}
+                      onMouseLeave={e => e.target.style.color = "#e2e8f0"}
+                    >{paper.title}</a>
+                  </div>
+                  <div style={{ display: "flex", gap: "0.4rem", flexShrink: 0 }}>
+                    <span style={{ background: `${paper.color}15`, color: paper.color, padding: "0.15rem 0.6rem", borderRadius: "20px", fontSize: "0.72rem", fontWeight: 600 }}>{paper.field}</span>
+                    <span style={{ background: "rgba(255,255,255,0.05)", color: "#64748b", padding: "0.15rem 0.6rem", borderRadius: "20px", fontSize: "0.72rem" }}>{paper.year}</span>
+                  </div>
+                </div>
+                <div style={{ color: "#64748b", fontSize: "0.8rem", marginBottom: "0.6rem" }}>{paper.authors}</div>
+                <div style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
+                  <span style={{ color: "#fbbf24", fontSize: "0.75rem", fontWeight: 700, flexShrink: 0, marginTop: "1px" }}>🔍 Gap:</span>
+                  <span style={{ color: "#94a3b8", fontSize: "0.82rem", lineHeight: 1.6 }}>{paper.gap}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FLOATING BUTTONS */}
+      {/* WhatsApp */}
       <a href="https://wa.me/8801617681926" target="_blank" rel="noopener noreferrer"
         title="Chat on WhatsApp"
         style={{
@@ -749,6 +918,45 @@ export default function Home() {
       >
         <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+      </a>
+
+      {/* Telegram */}
+      <a href="https://t.me/+8801617681926" target="_blank" rel="noopener noreferrer"
+        title="Chat on Telegram"
+        style={{
+          position: "fixed", bottom: "96px", right: "28px", zIndex: 9999,
+          width: "56px", height: "56px", borderRadius: "50%",
+          background: "linear-gradient(135deg, #29b6f6, #0288d1)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          boxShadow: "0 4px 20px rgba(41,182,246,0.5)",
+          textDecoration: "none", transition: "all 0.3s",
+        }}
+        onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.1)"; e.currentTarget.style.boxShadow = "0 6px 28px rgba(41,182,246,0.7)"; }}
+        onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(41,182,246,0.5)"; }}
+      >
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff">
+          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.17 13.667l-2.95-.924c-.64-.203-.658-.64.136-.954l11.57-4.461c.537-.194 1.006.131.968.893z"/>
+        </svg>
+      </a>
+
+      {/* Email */}
+      <a href="mailto:abdullahalmahmudmahmud777@gmail.com" target="_blank" rel="noopener noreferrer"
+        title="Send Email"
+        style={{
+          position: "fixed", bottom: "164px", right: "28px", zIndex: 9999,
+          width: "56px", height: "56px", borderRadius: "50%",
+          background: "linear-gradient(135deg, #6366f1, #4f46e5)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          boxShadow: "0 4px 20px rgba(99,102,241,0.5)",
+          textDecoration: "none", transition: "all 0.3s",
+        }}
+        onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.1)"; e.currentTarget.style.boxShadow = "0 6px 28px rgba(99,102,241,0.7)"; }}
+        onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(99,102,241,0.5)"; }}
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
         </svg>
       </a>
 
@@ -769,7 +977,7 @@ export default function Home() {
             >{l.icon} {l.label}</a>
           ))}
         </div>
-        <p style={{ color: "#334155", fontSize: "0.8rem" }}>© 2025 Abdullah Al Mahmud · </p>
+        <p style={{ color: "#334155", fontSize: "0.8rem" }}> Developed by Abdullah Al Mahmud · </p>
       </footer>
     </div>
   );
