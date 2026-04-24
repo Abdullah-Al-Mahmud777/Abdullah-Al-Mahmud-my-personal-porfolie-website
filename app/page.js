@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import emailjs from "@emailjs/browser";
 
 const NAV_LINKS = ["Home", "About", "Skills", "Projects", "Contact"];
 
@@ -87,6 +86,7 @@ const SOCIAL = [
   { label: "GitHub", href: "https://github.com/Abdullah-Al-Mahmud777", icon: "🐙" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/abdullah-al-mahmud-357566233/", icon: "💼" },
   { label: "LeetCode", href: "https://leetcode.com/u/CqiiFmYSgN/", icon: "🧩" },
+  { label: "WhatsApp", href: "https://wa.me/8801617681926", icon: "💬" },
   { label: "Email", href: "mailto:abdullahalmahmudmahmud777@gmail.com", icon: "📧" },
 ];
 
@@ -96,10 +96,6 @@ export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [typed, setTyped] = useState("");
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  const [sending, setSending] = useState(false);
-  const [sent, setSent] = useState(false);
-  const [error, setError] = useState("");
 
   useEffect(() => { setMounted(true); }, []);
   const roles = ["Full Stack Developer", "MERN Stack Expert", "React.js Developer", "Node.js Engineer"];
@@ -147,31 +143,6 @@ export default function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSending(true);
-    setError("");
-    try {
-      await emailjs.send(
-        "YOUR_SERVICE_ID",
-        "YOUR_TEMPLATE_ID",
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          message: formData.message,
-          to_email: "abdullahalmahmudmahmud777@gmail.com",
-        },
-        "YOUR_PUBLIC_KEY"
-      );
-      setSent(true);
-      setFormData({ name: "", email: "", message: "" });
-    } catch (err) {
-      setError("Failed to send. Please try again.");
-    } finally {
-      setSending(false);
-    }
-  };
-
   if (!mounted) return (
     <div style={{ backgroundColor: "#050510", minHeight: "100vh" }} />
   );
@@ -189,29 +160,52 @@ export default function Home() {
         borderBottom: scrolled ? "1px solid rgba(99,102,241,0.15)" : "none",
         transition: "all 0.3s ease",
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <div style={{
-            width: "36px", height: "36px", borderRadius: "10px",
-            background: "linear-gradient(135deg, #6366f1, #a855f7)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontWeight: 700, color: "#fff", fontSize: "1rem",
-          }}>A</div>
-          <span style={{ fontWeight: 700, fontSize: "1.05rem", color: "#e2e8f0" }}>Abdullah</span>
+
+        {/* LEFT — nav links */}
+        <div className="nav-links" style={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
+          {NAV_LINKS.map(link => (
+            <a key={link} href={`#${link.toLowerCase()}`}
+              style={{
+                fontSize: "0.85rem", fontWeight: 500, textDecoration: "none",
+                padding: "0.45rem 1rem", borderRadius: "8px",
+                color: activeNav === link ? "#a5b4fc" : "#94a3b8",
+                background: activeNav === link ? "rgba(99,102,241,0.12)" : "transparent",
+                border: activeNav === link ? "1px solid rgba(99,102,241,0.3)" : "1px solid transparent",
+                transition: "all 0.2s",
+              }}
+              onMouseEnter={e => { if (activeNav !== link) { e.currentTarget.style.color = "#e2e8f0"; e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.border = "1px solid rgba(255,255,255,0.08)"; } }}
+              onMouseLeave={e => { if (activeNav !== link) { e.currentTarget.style.color = "#94a3b8"; e.currentTarget.style.background = "transparent"; e.currentTarget.style.border = "1px solid transparent"; } }}
+            >{link}</a>
+          ))}
         </div>
 
-        {/* Desktop nav */}
-        <div className="desktop-nav" style={{ display: "flex", gap: "1.8rem", alignItems: "center" }}>
-          {NAV_LINKS.map(link => (
-            <a key={link} href={`#${link.toLowerCase()}`} className="nav-link"
-              style={{ fontSize: "0.9rem", fontWeight: 500, color: activeNav === link ? "#a5b4fc" : "#94a3b8" }}>
-              {link}
-            </a>
-          ))}
-          <a href="https://www.linkedin.com/in/abdullah-al-mahmud-357566233/" target="_blank" rel="noopener noreferrer"
-            className="btn-primary" style={{
-              padding: "0.45rem 1.1rem", borderRadius: "8px",
-              color: "#fff", textDecoration: "none", fontSize: "0.85rem", fontWeight: 600,
-            }}>LinkedIn</a>
+        {/* RIGHT — icon buttons */}
+        <div className="nav-icons" style={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
+          {/* GitHub */}
+          <a href="https://github.com/Abdullah-Al-Mahmud777" target="_blank" rel="noopener noreferrer" title="GitHub"
+            style={{ width: "36px", height: "36px", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", color: "#94a3b8", textDecoration: "none", transition: "all 0.2s" }}
+            onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.color = "#e2e8f0"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.color = "#94a3b8"; }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          </a>
+          {/* WhatsApp */}
+          <a href="https://wa.me/8801617681926" target="_blank" rel="noopener noreferrer" title="WhatsApp"
+            style={{ width: "36px", height: "36px", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(37,211,102,0.15)", border: "1px solid rgba(37,211,102,0.3)", color: "#22c55e", textDecoration: "none", transition: "all 0.2s" }}
+            onMouseEnter={e => { e.currentTarget.style.background = "rgba(37,211,102,0.3)"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "rgba(37,211,102,0.15)"; }}>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          {/* LinkedIn */}
+          <a href="https://www.linkedin.com/in/abdullah-al-mahmud-357566233/" target="_blank" rel="noopener noreferrer" title="LinkedIn"
+            style={{ width: "36px", height: "36px", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(10,102,194,0.15)", border: "1px solid rgba(10,102,194,0.3)", color: "#60a5fa", textDecoration: "none", transition: "all 0.2s" }}
+            onMouseEnter={e => { e.currentTarget.style.background = "rgba(10,102,194,0.3)"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "rgba(10,102,194,0.15)"; }}>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          {/* Hire Me */}
+          <a href="#contact" className="btn-primary" style={{ padding: "0.45rem 1.1rem", borderRadius: "8px", color: "#fff", textDecoration: "none", fontSize: "0.85rem", fontWeight: 600 }}>
+            Hire Me
+          </a>
         </div>
 
         {/* Mobile hamburger */}
@@ -240,25 +234,41 @@ export default function Home() {
           position: "fixed", top: "65px", left: 0, right: 0, zIndex: 999,
           background: "rgba(5,5,16,0.97)", backdropFilter: "blur(20px)",
           borderBottom: "1px solid rgba(99,102,241,0.2)",
-          padding: "1.5rem",
-          display: "flex", flexDirection: "column", gap: "1rem",
+          padding: "1.2rem 1.5rem",
+          display: "flex", flexDirection: "column", gap: "0.3rem",
         }}>
           {NAV_LINKS.map(link => (
             <a key={link} href={`#${link.toLowerCase()}`}
               onClick={() => setMobileMenu(false)}
               style={{
                 color: activeNav === link ? "#a5b4fc" : "#94a3b8",
-                textDecoration: "none", fontSize: "1rem", fontWeight: 500,
-                padding: "0.5rem 0", borderBottom: "1px solid rgba(99,102,241,0.08)",
+                textDecoration: "none", fontSize: "0.95rem", fontWeight: 500,
+                padding: "0.7rem 0.8rem", borderRadius: "8px",
+                background: activeNav === link ? "rgba(99,102,241,0.1)" : "transparent",
+                display: "block",
               }}>{link}</a>
           ))}
-          <a href="https://www.linkedin.com/in/abdullah-al-mahmud-357566233/" target="_blank" rel="noopener noreferrer"
-            onClick={() => setMobileMenu(false)}
-            className="btn-primary" style={{
-              padding: "0.7rem 1.2rem", borderRadius: "8px",
-              color: "#fff", textDecoration: "none", fontSize: "0.9rem",
-              fontWeight: 600, textAlign: "center", marginTop: "0.5rem",
-            }}>💼 LinkedIn</a>
+          {/* divider */}
+          <div style={{ height: "1px", background: "rgba(99,102,241,0.15)", margin: "0.5rem 0" }} />
+          {/* social row */}
+          <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap" }}>
+            <a href="https://github.com/Abdullah-Al-Mahmud777" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenu(false)}
+              style={{ flex: 1, minWidth: "80px", padding: "0.6rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#94a3b8", textDecoration: "none", fontSize: "0.82rem", fontWeight: 600, textAlign: "center" }}>
+              🐙 GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/abdullah-al-mahmud-357566233/" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenu(false)}
+              style={{ flex: 1, minWidth: "80px", padding: "0.6rem", borderRadius: "8px", background: "rgba(10,102,194,0.15)", border: "1px solid rgba(10,102,194,0.3)", color: "#60a5fa", textDecoration: "none", fontSize: "0.82rem", fontWeight: 600, textAlign: "center" }}>
+              💼 LinkedIn
+            </a>
+            <a href="https://wa.me/8801617681926" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenu(false)}
+              style={{ flex: 1, minWidth: "80px", padding: "0.6rem", borderRadius: "8px", background: "rgba(37,211,102,0.15)", border: "1px solid rgba(37,211,102,0.3)", color: "#22c55e", textDecoration: "none", fontSize: "0.82rem", fontWeight: 600, textAlign: "center" }}>
+              💬 WhatsApp
+            </a>
+          </div>
+          <a href="#contact" onClick={() => setMobileMenu(false)} className="btn-primary"
+            style={{ padding: "0.75rem", borderRadius: "8px", color: "#fff", textDecoration: "none", fontSize: "0.9rem", fontWeight: 700, textAlign: "center", marginTop: "0.3rem" }}>
+            Hire Me
+          </a>
         </div>
       )}
 
@@ -620,62 +630,94 @@ export default function Home() {
           <p style={{ color: "#64748b", fontSize: "0.92rem" }}>Have a project in mind? Let's build something great together.</p>
         </div>
 
-        <div className="contact-info-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem", marginBottom: "2rem" }}>
+        <div className="contact-info-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
           {[
             { icon: "📧", label: "Email", value: "abdullahalmahmudmahmud777@gmail.com", href: "mailto:abdullahalmahmudmahmud777@gmail.com" },
             { icon: "💼", label: "LinkedIn", value: "Abdullah Al Mahmud", href: "https://www.linkedin.com/in/abdullah-al-mahmud-357566233/" },
             { icon: "💻", label: "GitHub", value: "@Abdullah-Al-Mahmud777", href: "https://github.com/Abdullah-Al-Mahmud777" },
+            { icon: "💬", label: "WhatsApp", value: "+880 1617 681926", href: "https://wa.me/8801617681926", green: true },
           ].map(item => (
             <a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer"
-              className="project-card" style={{ borderRadius: "12px", padding: "1.2rem", textAlign: "center", textDecoration: "none", display: "block" }}>
+              className="project-card" style={{ borderRadius: "12px", padding: "1.2rem", textAlign: "center", textDecoration: "none", display: "block",
+                border: item.green ? "1px solid rgba(37,211,102,0.25)" : undefined,
+              }}>
               <div style={{ fontSize: "1.4rem", marginBottom: "0.4rem" }}>{item.icon}</div>
-              <div style={{ color: "#6366f1", fontSize: "0.75rem", fontWeight: 600, marginBottom: "0.3rem" }}>{item.label}</div>
+              <div style={{ color: item.green ? "#22c55e" : "#6366f1", fontSize: "0.75rem", fontWeight: 600, marginBottom: "0.3rem" }}>{item.label}</div>
               <div style={{ color: "#94a3b8", fontSize: "0.72rem", wordBreak: "break-all" }}>{item.value}</div>
             </a>
           ))}
         </div>
 
-        <form onSubmit={handleSubmit} style={{
-          background: "rgba(255,255,255,0.02)", border: "1px solid rgba(99,102,241,0.15)",
-          borderRadius: "16px", padding: "1.8rem", display: "flex", flexDirection: "column", gap: "1rem",
-        }}>
-          <div className="form-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-            <div>
-              <label style={{ display: "block", color: "#94a3b8", fontSize: "0.82rem", marginBottom: "0.4rem" }}>Name</label>
-              <input className="contact-input" placeholder="Your name" value={formData.name}
-                onChange={e => setFormData({ ...formData, name: e.target.value })} required />
-            </div>
-            <div>
-              <label style={{ display: "block", color: "#94a3b8", fontSize: "0.82rem", marginBottom: "0.4rem" }}>Email</label>
-              <input className="contact-input" type="email" placeholder="your@email.com" value={formData.email}
-                onChange={e => setFormData({ ...formData, email: e.target.value })} required />
-            </div>
+        {/* EDUCATION */}
+        <div style={{ marginTop: "2rem" }}>
+          <h3 style={{ fontSize: "1rem", fontWeight: 700, color: "#a5b4fc", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "8px" }}>
+            🎓 Education
+          </h3>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            {[
+              {
+                degree: "BSc in Computer Science & Engineering",
+                institute: "Varendra University",
+                period: "2022 – Present",
+                color: "#6366f1",
+              },
+              {
+                degree: "Higher Secondary Certificate (HSC)",
+                institute: "Kafuria Degree College",
+                period: "2021",
+                color: "#a855f7",
+              },
+              {
+                degree: "Secondary School Certificate (SSC)",
+                institute: "Natore Govt. Boys High School",
+                period: "2019",
+                color: "#ec4899",
+              },
+            ].map((edu, i) => (
+              <div key={i} style={{
+                display: "flex", gap: "1rem", alignItems: "flex-start",
+                background: "rgba(255,255,255,0.02)", border: `1px solid ${edu.color}25`,
+                borderRadius: "12px", padding: "1.2rem 1.4rem",
+                borderLeft: `3px solid ${edu.color}`,
+                transition: "all 0.3s",
+              }}
+                onMouseEnter={e => { e.currentTarget.style.background = `${edu.color}08`; e.currentTarget.style.borderColor = `${edu.color}50`; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.02)"; e.currentTarget.style.borderColor = `${edu.color}25`; }}
+              >
+                <div style={{ flexShrink: 0, marginTop: "3px" }}>
+                  <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: edu.color, boxShadow: `0 0 8px ${edu.color}` }} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "0.3rem", marginBottom: "0.3rem" }}>
+                    <span style={{ color: "#e2e8f0", fontWeight: 700, fontSize: "0.92rem" }}>{edu.degree}</span>
+                    <span style={{ color: edu.color, fontSize: "0.78rem", fontWeight: 600, background: `${edu.color}15`, padding: "0.15rem 0.6rem", borderRadius: "20px" }}>{edu.period}</span>
+                  </div>
+                  <div style={{ color: "#64748b", fontSize: "0.85rem" }}>📍 {edu.institute}</div>
+                </div>
+              </div>
+            ))}
           </div>
-          <div>
-            <label style={{ display: "block", color: "#94a3b8", fontSize: "0.82rem", marginBottom: "0.4rem" }}>Message</label>
-            <textarea className="contact-input" rows={5} placeholder="Tell me about your project..."
-              value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })}
-              required style={{ resize: "vertical" }} />
-          </div>
-          <button type="submit" className="btn-primary" disabled={sending} style={{
-            padding: "0.85rem", borderRadius: "10px", color: "#fff",
-            fontWeight: 700, fontSize: "0.95rem", border: "none", cursor: sending ? "not-allowed" : "pointer",
-            opacity: sending ? 0.7 : 1,
-          }}>
-            {sending ? "Sending..." : "Send Message 🚀"}
-          </button>
-          {sent && (
-            <div style={{ textAlign: "center", color: "#22c55e", fontWeight: 600, fontSize: "0.9rem", padding: "0.5rem", background: "rgba(34,197,94,0.1)", borderRadius: "8px", border: "1px solid rgba(34,197,94,0.3)" }}>
-              ✅ Message sent! I'll get back to you soon.
-            </div>
-          )}
-          {error && (
-            <div style={{ textAlign: "center", color: "#ef4444", fontWeight: 600, fontSize: "0.9rem", padding: "0.5rem", background: "rgba(239,68,68,0.1)", borderRadius: "8px", border: "1px solid rgba(239,68,68,0.3)" }}>
-              ❌ {error}
-            </div>
-          )}
-        </form>
+        </div>
       </section>
+
+      {/* FLOATING WHATSAPP */}
+      <a href="https://wa.me/8801617681926" target="_blank" rel="noopener noreferrer"
+        title="Chat on WhatsApp"
+        style={{
+          position: "fixed", bottom: "28px", right: "28px", zIndex: 9999,
+          width: "56px", height: "56px", borderRadius: "50%",
+          background: "linear-gradient(135deg, #25d366, #128c7e)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          boxShadow: "0 4px 20px rgba(37,211,102,0.5)",
+          textDecoration: "none", transition: "all 0.3s",
+        }}
+        onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.1)"; e.currentTarget.style.boxShadow = "0 6px 28px rgba(37,211,102,0.7)"; }}
+        onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(37,211,102,0.5)"; }}
+      >
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+      </a>
 
       {/* FOOTER */}
       <footer style={{
