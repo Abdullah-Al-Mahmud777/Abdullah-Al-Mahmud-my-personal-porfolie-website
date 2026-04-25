@@ -3,6 +3,10 @@ import "./globals.css";
 export const metadata = {
   title: "Abdullah Al Mahmud | Full Stack Developer",
   description: "Full Stack Developer specializing in MERN stack, React.js, Node.js, and modern web technologies.",
+  icons: {
+    icon: "/favicon-round.png",
+    apple: "/favicon-round.png",
+  },
 };
 
 export default function RootLayout({ children }) {

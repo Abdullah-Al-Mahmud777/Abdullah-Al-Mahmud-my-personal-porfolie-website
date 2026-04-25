@@ -324,7 +324,7 @@ export default function Home() {
               💼 LinkedIn
             </a>
             <a href="#contact" className="btn-secondary" style={{ padding: "0.8rem 2rem", borderRadius: "10px", textDecoration: "none", fontWeight: 600, fontSize: "0.95rem" }}>Contact</a>
-            <a href="/cv.pdf" download style={{ padding: "0.8rem 2rem", borderRadius: "10px", textDecoration: "none", fontWeight: 600, fontSize: "0.95rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.15)", color: "#e2e8f0", display: "inline-flex", alignItems: "center", gap: "6px" }}>⬇️ CV</a>
+            <a href="/My Resume (7).pdf" download style={{ padding: "0.8rem 2rem", borderRadius: "10px", textDecoration: "none", fontWeight: 600, fontSize: "0.95rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.15)", color: "#e2e8f0", display: "inline-flex", alignItems: "center", gap: "6px" }}>⬇️ CV</a>
           </div>
 
           <div style={{ display: "flex", gap: "1.5rem", justifyContent: "center", marginTop: "3.5rem", flexWrap: "wrap" }}>
