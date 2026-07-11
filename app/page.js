@@ -1,21 +1,133 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 
-const NAV_LINKS = ["Home", "About", "Skills", "Projects", "Research", "Contact"];
+const NAV_LINKS = ["Home", "About", "Experience", "Skills", "Projects", "Research", "Contact"];
 
-const SKILLS = [
-  { name: "React.js", icon: "⚛️", level: 90 },
-  { name: "Next.js", icon: "▲", level: 85 },
-  { name: "Node.js", icon: "🟢", level: 88 },
-  { name: "MongoDB", icon: "🍃", level: 82 },
-  { name: "Express.js", icon: "🚀", level: 85 },
-  { name: "JavaScript", icon: "🟡", level: 92 },
-  { name: "Tailwind CSS", icon: "🎨", level: 88 },
-  { name: "PHP / Laravel", icon: "🐘", level: 75 },
-  { name: "MySQL", icon: "🗄️", level: 78 },
-  { name: "REST APIs", icon: "🔗", level: 87 },
-  { name: "JWT Auth", icon: "🔐", level: 83 },
-  { name: "Git / GitHub", icon: "🐙", level: 85 },
+const WORK_EXPERIENCE = [
+  {
+    role: "WordPress Developer",
+    company: "Odyssey Tech",
+    location: "London, UK (Remote/Office)",
+    period: "06/2024 – 02/2025",
+    responsibilities: [
+      "Resolved complex technical bugs, theme issues, and plugin conflicts to ensure site stability.",
+      "Executed advanced theme and plugin customizations and managed security patches and database optimization.",
+      "Collaborated with senior developers to deliver high-quality, scalable web solutions."
+    ]
+  },
+  {
+    role: "Frontend Developer",
+    company: "RajFlix Solutions",
+    location: "Rajshahi, Bangladesh",
+    period: "02/2023 – 05/2024",
+    responsibilities: [
+      "Developed responsive, user-friendly web interfaces and optimized loading speeds for better performance.",
+      "Integrated REST APIs in collaboration with backend teams and implemented modern UI/UX layouts.",
+      "Identified and fixed UI bugs to enhance the overall user experience and interface consistency."
+    ]
+  }
+];
+
+const SKILLS_CATEGORIES = [
+  {
+    category: "Languages",
+    icon: "🤖",
+    color: "#6366f1",
+    skills: ["C", "C++", "Java", "Python", "PHP", "JavaScript", "TypeScript"]
+  },
+  {
+    category: "Frontend",
+    icon: "�️",
+    color: "#a855f7",
+    skills: ["React.js", "Next.js", "Redux", "HTML", "CSS", "WordPress (Elementor)"]
+  },
+  {
+    category: "Backend",
+    icon: "🐙",
+    color: "#ec4899",
+    skills: ["Node.js", "Express.js", "Laravel", "REST API"]
+  },
+  {
+    category: "Database",
+    icon: "�",
+    color: "#22c55e",
+    skills: ["MongoDB", "MySQL", "MS SQL Server", "Firebase"]
+  },
+  {
+    category: "Tools",
+    icon: "�️",
+    color: "#f59e0b",
+    skills: ["Postman", "Docker (Basic)"]
+  },
+  {
+    category: "Soft Skills",
+    icon: "�",
+    color: "#06b6d4",
+    skills: ["Team Work", "Collaboration & Communication", "Creative problem-solving"]
+  },
+  {
+    category: "AI & Integration",
+    icon: "🤖",
+    color: "#f59e0b",
+    skills: ["OpenAI API", "Gemini API", "AI API Integration", "Prompt Engineering"]
+  },
+  {
+    category: "Version Control",
+    icon: "🐙",
+    color: "#06b6d4",
+    skills: ["Git", "GitHub"]
+  },
+  {
+    category: "Deployment & DevOps",
+    icon: "🚀",
+    color: "#6366f1",
+    skills: ["Vercel", "Netlify", "Render", "Railway", "Firebase Hosting"]
+  }
+];
+
+const CERTIFICATIONS = [
+  {
+    name: "Coursera Certificate",
+    issuer: "Coursera",
+    date: "2026",
+    color: "#6366f1",
+    link: "https://www.coursera.org/account/accomplishments/verify/V61DZJC6COF1"
+  },
+  {
+    name: "Coursera Certificate",
+    issuer: "Coursera",
+    date: "2026",
+    color: "#a855f7",
+    link: "https://www.coursera.org/account/accomplishments/verify/B16W8CTC4TE9"
+  },
+  {
+    name: "Educative Certificate",
+    issuer: "Educative",
+    date: "2026",
+    color: "#ec4899",
+    link: "https://www.educative.io/verify-certificate/OMUDT5SFFH"
+  },
+  {
+    name: "Educative Certificate",
+    issuer: "Educative",
+    date: "2026",
+    color: "#22c55e",
+    link: "https://www.educative.io/verify-certificate/MEOM9HCGQV"
+  },
+  {
+    name: "HackerRank Certificate",
+    issuer: "HackerRank",
+    date: "2026",
+    color: "#f59e0b",
+    link: "https://www.hackerrank.com/certificates/iframe/f27bd73a6e3a"
+  },
+  {
+    name: "Credly Badges",
+    issuer: "Credly",
+    date: "2026",
+    color: "#06b6d4",
+    link: "https://www.credly.com/users/abdullah-al-mahmud.afe1d442"
+  }
 ];
 
 const PROJECTS = [
@@ -101,7 +213,7 @@ export default function Home() {
     document.body.classList.toggle("light", !dark);
   }, [dark]);
 
-  const roles = ["Full Stack Developer", "MERN Stack developer", "React.js Developer", "Node.js Engineer","php/laravel"];
+  const roles = ["Full Stack Software Engineer", "MERN Stack developer", "React.js Developer", "Node.js Engineer","php/laravel"];
   const roleIndex = useRef(0);
   const charIndex = useRef(0);
   const deleting = useRef(false);
@@ -324,7 +436,7 @@ export default function Home() {
               💼 LinkedIn
             </a>
             <a href="#contact" className="btn-secondary" style={{ padding: "0.8rem 2rem", borderRadius: "10px", textDecoration: "none", fontWeight: 600, fontSize: "0.95rem" }}>Contact</a>
-            <a href="/My Resume (7).pdf" download style={{ padding: "0.8rem 2rem", borderRadius: "10px", textDecoration: "none", fontWeight: 600, fontSize: "0.95rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.15)", color: "#e2e8f0", display: "inline-flex", alignItems: "center", gap: "6px" }}>⬇️ CV</a>
+            <a href="/Abdullah-Al-Mahmud.pdf" download style={{ padding: "0.8rem 2rem", borderRadius: "10px", textDecoration: "none", fontWeight: 600, fontSize: "0.95rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.15)", color: "#e2e8f0", display: "inline-flex", alignItems: "center", gap: "6px" }}>⬇️ CV</a>
           </div>
 
           <div style={{ display: "flex", gap: "1.5rem", justifyContent: "center", marginTop: "3.5rem", flexWrap: "wrap" }}>
@@ -360,7 +472,7 @@ export default function Home() {
                 background: "linear-gradient(135deg, #6366f1, #a855f7)",
                 borderRadius: "20px", padding: "0.4rem 1rem",
                 fontSize: "0.78rem", fontWeight: 700, color: "#fff", whiteSpace: "nowrap",
-              }}>Full Stack Developer</div>
+              }}>Full Stack Software Engineer</div>
             </div>
           </div>
           <div>
@@ -368,7 +480,7 @@ export default function Home() {
               Passionate Coder & Lifelong Learner
             </h3>
             <p style={{ color: "#64748b", lineHeight: 1.8, marginBottom: "1rem", fontSize: "0.93rem" }}>
-              I'm Abdullah Al Mahmud, a Full Stack Developer with expertise in building scalable web applications.
+              I'm Abdullah Al Mahmud, a Full Stack Software Engineer with expertise in building scalable web applications.
               I specialize in the MERN stack and love creating clean, efficient, and user-friendly solutions.
             </p>
             <p style={{ color: "#64748b", lineHeight: 1.8, marginBottom: "1.5rem", fontSize: "0.93rem" }}>
@@ -403,6 +515,64 @@ export default function Home() {
         </div>
       </section>
 
+      {/* EXPERIENCE */}
+      <section id="experience" style={{ padding: "6rem 1.5rem", background: "rgba(99,102,241,0.02)", borderTop: "1px solid rgba(99,102,241,0.08)", borderBottom: "1px solid rgba(99,102,241,0.08)" }}>
+        <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "3rem" }}>
+            <p style={{ color: "#6366f1", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "0.5rem" }}>Career Journey</p>
+            <h2 className="section-title gradient-text" style={{ fontSize: "2rem", fontWeight: 700 }}>Work Experience</h2>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            {WORK_EXPERIENCE.map((exp, index) => (
+              <div key={index} style={{
+                background: "rgba(255,255,255,0.02)", border: "1px solid rgba(99,102,241,0.15)",
+                borderRadius: "16px", padding: "2rem", position: "relative",
+                transition: "all 0.3s",
+              }}
+                onMouseEnter={e => { e.currentTarget.style.background = "rgba(99,102,241,0.05)"; e.currentTarget.style.borderColor = "rgba(99,102,241,0.4)"; e.currentTarget.style.transform = "translateY(-4px)"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.02)"; e.currentTarget.style.borderColor = "rgba(99,102,241,0.15)"; e.currentTarget.style.transform = "translateY(0)"; }}
+              >
+                {/* Timeline dot */}
+                <div style={{
+                  position: "absolute", top: "2rem", left: "-12px",
+                  width: "24px", height: "24px", borderRadius: "50%",
+                  background: "linear-gradient(135deg, #6366f1, #a855f7)",
+                  boxShadow: "0 0 20px rgba(99,102,241,0.5)",
+                  zIndex: 1,
+                }} />
+                
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1rem" }}>
+                  <div>
+                    <h3 style={{ fontSize: "1.2rem", fontWeight: 700, color: "#e2e8f0", marginBottom: "0.3rem" }}>{exp.role}</h3>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+                      <span style={{ color: "#6366f1", fontWeight: 600, fontSize: "0.95rem" }}>{exp.company}</span>
+                      <span style={{ color: "#64748b", fontSize: "0.85rem" }}>•</span>
+                      <span style={{ color: "#64748b", fontSize: "0.85rem" }}>{exp.location}</span>
+                    </div>
+                  </div>
+                  <span style={{
+                    background: "rgba(99,102,241,0.15)", color: "#a5b4fc",
+                    padding: "0.4rem 1rem", borderRadius: "20px", fontSize: "0.82rem", fontWeight: 600,
+                    border: "1px solid rgba(99,102,241,0.3)",
+                  }}>
+                    {exp.period}
+                  </span>
+                </div>
+
+                <ul style={{ margin: 0, paddingLeft: "1.2rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                  {exp.responsibilities.map((resp, i) => (
+                    <li key={i} style={{ color: "#94a3b8", fontSize: "0.9rem", lineHeight: 1.7, paddingLeft: "0.5rem" }}>
+                      {resp}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* SERVICES */}
       <section style={{ padding: "5rem 1.5rem", background: "rgba(99,102,241,0.02)", borderTop: "1px solid rgba(99,102,241,0.08)", borderBottom: "1px solid rgba(99,102,241,0.08)" }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
@@ -428,23 +598,67 @@ export default function Home() {
           <p style={{ color: "#6366f1", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "0.5rem" }}>My Expertise</p>
           <h2 className="section-title gradient-text" style={{ fontSize: "2rem", fontWeight: 700 }}>Skills & Technologies</h2>
         </div>
-        <div className="skills-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: "1rem" }}>
-          {SKILLS.map(skill => (
-            <div key={skill.name} className="skill-badge" style={{ borderRadius: "12px", padding: "1.2rem 1rem" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.8rem" }}>
-                <span style={{ fontSize: "1.3rem" }}>{skill.icon}</span>
-                <span style={{ fontWeight: 600, fontSize: "0.88rem", color: "#e2e8f0" }}>{skill.name}</span>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "1.5rem" }}>
+          {SKILLS_CATEGORIES.map((cat, index) => (
+            <div key={index} className="project-card" style={{
+              borderRadius: "16px", padding: "1.8rem",
+              border: `1px solid ${cat.color}30`,
+              transition: "all 0.3s",
+            }}
+              onMouseEnter={e => { e.currentTarget.style.background = `${cat.color}08`; e.currentTarget.style.borderColor = `${cat.color}60`; e.currentTarget.style.transform = "translateY(-4px)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.02)"; e.currentTarget.style.borderColor = `${cat.color}30`; e.currentTarget.style.transform = "translateY(0)"; }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1.2rem" }}>
+                <span style={{ fontSize: "1.8rem" }}>{cat.icon}</span>
+                <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#e2e8f0" }}>{cat.category}</h3>
               </div>
-              <div style={{ background: "rgba(255,255,255,0.05)", borderRadius: "4px", height: "4px", overflow: "hidden" }}>
-                <div style={{
-                  height: "100%", borderRadius: "4px",
-                  background: "linear-gradient(90deg, #6366f1, #a855f7)",
-                  width: `${skill.level}%`,
-                }} />
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}>
+                {cat.skills.map((skill, i) => (
+                  <span key={i} style={{
+                    background: `${cat.color}15`, border: `1px solid ${cat.color}40`,
+                    color: cat.color, padding: "0.4rem 0.9rem", borderRadius: "20px",
+                    fontSize: "0.82rem", fontWeight: 500,
+                  }}>
+                    {skill}
+                  </span>
+                ))}
               </div>
-              <div style={{ textAlign: "right", fontSize: "0.72rem", color: "#6366f1", marginTop: "4px" }}>{skill.level}%</div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* CERTIFICATIONS */}
+      <section style={{ padding: "5rem 1.5rem", background: "rgba(99,102,241,0.02)", borderTop: "1px solid rgba(99,102,241,0.08)", borderBottom: "1px solid rgba(99,102,241,0.08)" }}>
+        <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "3rem" }}>
+            <p style={{ color: "#6366f1", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "0.5rem" }}>Credentials</p>
+            <h2 className="section-title gradient-text" style={{ fontSize: "2rem", fontWeight: 700 }}>Certifications</h2>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
+            {CERTIFICATIONS.map((cert, index) => (
+              <a key={index} href={cert.link} target="_blank" rel="noopener noreferrer" style={{
+                background: "rgba(255,255,255,0.02)", border: `1px solid ${cert.color}30`,
+                borderRadius: "16px", padding: "2rem", textAlign: "center",
+                transition: "all 0.3s", textDecoration: "none", display: "block",
+              }}
+                onMouseEnter={e => { e.currentTarget.style.background = `${cert.color}08`; e.currentTarget.style.borderColor = `${cert.color}60`; e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = `0 20px 40px ${cert.color}20`; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.02)"; e.currentTarget.style.borderColor = `${cert.color}30`; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
+              >
+                <div style={{
+                  width: "60px", height: "60px", borderRadius: "50%",
+                  background: `linear-gradient(135deg, ${cert.color}, ${cert.color}99)`,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  margin: "0 auto 1.5rem", fontSize: "1.8rem",
+                }}>
+                  🏆
+                </div>
+                <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#e2e8f0", marginBottom: "0.5rem" }}>{cert.name}</h3>
+                <div style={{ color: cert.color, fontSize: "0.9rem", fontWeight: 600, marginBottom: "0.3rem" }}>{cert.issuer}</div>
+                <div style={{ color: "#64748b", fontSize: "0.82rem" }}>{cert.date}</div>
+              </a>
+            ))}
+          </div>
         </div>
       </section>
 
