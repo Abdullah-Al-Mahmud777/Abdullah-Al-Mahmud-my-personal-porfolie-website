@@ -91,6 +91,13 @@ const CERTIFICATIONS = [
     issuer: "Coursera",
     date: "2026",
     color: "#6366f1",
+    link: "https://www.coursera.org/account/accomplishments/verify/M4MEPHA367GQ"
+  },
+  {
+    name: "Coursera Certificate",
+    issuer: "Coursera",
+    date: "2026",
+    color: "#8b5cf6",
     link: "https://www.coursera.org/account/accomplishments/verify/V61DZJC6COF1"
   },
   {
