@@ -5,7 +5,7 @@ const NAV_LINKS = ["Home", "About", "Experience", "Skills", "Projects", "Researc
 
 const WORK_EXPERIENCE = [
   {
-    role: "WordPress Developer",
+    role: "Full Stack Developer",
     company: "Odyssey Tech",
     location: "London, UK (Remote/Office)",
     period: "06/2024 – 02/2025",
@@ -16,7 +16,7 @@ const WORK_EXPERIENCE = [
     ]
   },
   {
-    role: "Frontend Developer",
+    role: "Full Stack Developer",
     company: "RajFlix Solutions",
     location: "Rajshahi, Bangladesh",
     period: "02/2023 – 05/2024",
