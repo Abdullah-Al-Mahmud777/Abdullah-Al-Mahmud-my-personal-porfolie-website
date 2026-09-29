@@ -1,22 +1,29 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 
-const NAV_LINKS = ["Home", "About", "Experience", "Skills", "Projects", "Research", "Contact"];
+const NAV_LINKS = ["Home", "About", "Experience", "Skills", "Projects", "Research", "CV", "Contact"];
+
+const CV_FILE = "/Abdullah-Al-Mahmud-CV.pdf";
+
+const ROLES = ["Software Engineer", "Information Technology Developer", "Technology Researcher"];
 
 const WORK_EXPERIENCE = [
   {
-    role: "Full Stack Developer",
+    role: "Software Engineer",
     company: "Odyssey Tech",
-    location: "London, UK (Remote/Office)",
+    location: "London, UK (Remote)",
     period: "06/2024 – 02/2025",
     responsibilities: [
-      "Resolved complex technical bugs, theme issues, and plugin conflicts to ensure site stability.",
-      "Executed advanced theme and plugin customizations and managed security patches and database optimization.",
-      "Collaborated with senior developers to deliver high-quality, scalable web solutions."
+      "Developed scalable and maintainable software solutions aligned with business requirements.",
+      "Optimized application performance, reliability, and functionality.",
+      "Collaborated with engineering teams to design, test, and deliver high-quality software products.",
+      "Designed and implemented RESTful APIs and backend services to support scalable applications.",
+      "Identified and resolved technical issues through debugging, testing, and continuous code improvements."
     ]
   },
+
   {
-    role: "Full Stack Developer",
+    role: "Frontend Developer",
     company: "RajFlix Solutions",
     location: "Rajshahi, Bangladesh",
     period: "02/2023 – 05/2024",
@@ -25,9 +32,23 @@ const WORK_EXPERIENCE = [
       "Integrated REST APIs in collaboration with backend teams and implemented modern UI/UX layouts.",
       "Identified and fixed UI bugs to enhance the overall user experience and interface consistency."
     ]
+  },
+
+  {
+    role: "IT Support Engineer",
+    company: "RajFlix Solutions",
+    location: "Rajshahi, Bangladesh",
+    period: "02/2023 – 05/2024",
+    responsibilities: [
+      "Provided technical support for hardware, software, operating systems, and network connectivity issues.",
+      "Installed, configured, and maintained computers, software applications, peripherals, and IT equipment.",
+      "Diagnosed and resolved technical issues while assisting users with system access, configuration, and troubleshooting.",
+      "Monitored system and network performance and performed routine maintenance to ensure reliable IT operations.",
+      "Supported Windows and Linux environments and assisted with user account, security, and system configuration tasks.",
+      "Documented technical issues, troubleshooting steps, and resolutions to improve support efficiency and maintain IT records."
+    ]
   }
 ];
-
 const SKILLS_CATEGORIES = [
   {
     category: "Languages",
@@ -37,31 +58,31 @@ const SKILLS_CATEGORIES = [
   },
   {
     category: "Frontend",
-    icon: "�️",
+    icon: "🎨",
     color: "#a855f7",
     skills: ["React.js", "Next.js", "Redux", "HTML", "CSS", "WordPress (Elementor)"]
   },
   {
     category: "Backend",
-    icon: "🐙",
+    icon: "⚙️",
     color: "#ec4899",
     skills: ["Node.js", "Express.js", "Laravel", "REST API"]
   },
   {
     category: "Database",
-    icon: "�",
+    icon: "🗄️",
     color: "#22c55e",
     skills: ["MongoDB", "MySQL", "MS SQL Server", "Firebase"]
   },
   {
     category: "Tools",
-    icon: "�️",
+    icon: "🛠️",
     color: "#f59e0b",
     skills: ["Postman", "Docker (Basic)"]
   },
   {
     category: "Soft Skills",
-    icon: "�",
+    icon: "🤝",
     color: "#06b6d4",
     skills: ["Team Work", "Collaboration & Communication", "Creative problem-solving"]
   },
@@ -82,7 +103,20 @@ const SKILLS_CATEGORIES = [
     icon: "🚀",
     color: "#6366f1",
     skills: ["Vercel", "Netlify", "Render", "Railway", "Firebase Hosting"]
-  }
+  },
+  {
+  category: "IT & System Administration",
+  icon: "🖥️",
+  color: "#10b981",
+  skills: [
+    "System Configuration & Maintenance",
+    "Windows/Linux Administration",
+    "Network Troubleshooting",
+    "Hardware/Software Support",
+    "Server Management",
+    "System Monitoring"
+  ]
+},
 ];
 
 const CERTIFICATIONS = [
@@ -215,25 +249,28 @@ export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [typed, setTyped] = useState("");
+  const [imgOk, setImgOk] = useState(true);
 
   useEffect(() => {
     document.body.classList.toggle("light", !dark);
   }, [dark]);
 
-  const roles = ["Full Stack Software Engineer", "MERN Stack developer", "React.js Developer", "Node.js Engineer","php/laravel"];
   const roleIndex = useRef(0);
   const charIndex = useRef(0);
   const deleting = useRef(false);
 
   useEffect(() => {
+    let cancelled = false;
+    let timer;
     const type = () => {
-      const current = roles[roleIndex.current];
+      if (cancelled) return;
+      const current = ROLES[roleIndex.current];
       if (!deleting.current) {
         setTyped(current.slice(0, charIndex.current + 1));
         charIndex.current++;
         if (charIndex.current === current.length) {
           deleting.current = true;
-          setTimeout(type, 1500);
+          timer = setTimeout(type, 1500);
           return;
         }
       } else {
@@ -241,13 +278,13 @@ export default function Home() {
         charIndex.current--;
         if (charIndex.current === 0) {
           deleting.current = false;
-          roleIndex.current = (roleIndex.current + 1) % roles.length;
+          roleIndex.current = (roleIndex.current + 1) % ROLES.length;
         }
       }
-      setTimeout(type, deleting.current ? 60 : 100);
+      timer = setTimeout(type, deleting.current ? 60 : 100);
     };
-    const t = setTimeout(type, 500);
-    return () => clearTimeout(t);
+    timer = setTimeout(type, 500);
+    return () => { cancelled = true; clearTimeout(timer); };
   }, []);
 
   useEffect(() => {
@@ -351,7 +388,6 @@ export default function Home() {
               background: "#a5b4fc", borderRadius: "2px",
               transition: "all 0.3s",
               transform: mobileMenu && i === 0 ? "rotate(45deg) translate(5px, 5px)"
-                : mobileMenu && i === 1 ? "opacity: 0"
                 : mobileMenu && i === 2 ? "rotate(-45deg) translate(5px, -5px)" : "none",
               opacity: mobileMenu && i === 1 ? 0 : 1,
             }} />
@@ -423,7 +459,7 @@ export default function Home() {
           </div>
 
           <h1 style={{ fontSize: "clamp(2rem, 6vw, 4rem)", fontWeight: 800, lineHeight: 1.1, marginBottom: "0.8rem" }}>
-            Hi, I'm <span className="gradient-text">Abdullah Al Mahmud</span>
+            Hi, I&apos;m <span className="gradient-text">Abdullah Al Mahmud</span>
           </h1>
 
           <div style={{ fontSize: "clamp(1rem, 3vw, 1.6rem)", fontWeight: 600, color: "#94a3b8", marginBottom: "1.2rem", minHeight: "2.2rem" }}>
@@ -443,7 +479,7 @@ export default function Home() {
               💼 LinkedIn
             </a>
             <a href="#contact" className="btn-secondary" style={{ padding: "0.8rem 2rem", borderRadius: "10px", textDecoration: "none", fontWeight: 600, fontSize: "0.95rem" }}>Contact</a>
-            <a href="/Abdullah-Al-Mahmud.pdf" download style={{ padding: "0.8rem 2rem", borderRadius: "10px", textDecoration: "none", fontWeight: 600, fontSize: "0.95rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.15)", color: "#e2e8f0", display: "inline-flex", alignItems: "center", gap: "6px" }}>⬇️ CV</a>
+            <a href={CV_FILE} download="Abdullah-Al-Mahmud-CV.pdf" style={{ padding: "0.8rem 2rem", borderRadius: "10px", textDecoration: "none", fontWeight: 600, fontSize: "0.95rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.15)", color: "#e2e8f0", display: "inline-flex", alignItems: "center", gap: "6px" }}>⬇️ CV</a>
           </div>
 
           <div style={{ display: "flex", gap: "1.5rem", justifyContent: "center", marginTop: "3.5rem", flexWrap: "wrap" }}>
@@ -471,9 +507,13 @@ export default function Home() {
               border: "2px solid rgba(99,102,241,0.3)",
               boxShadow: "0 20px 60px rgba(99,102,241,0.2)",
             }}>
-              <img src="/profile.jpg" alt="Abdullah Al Mahmud"
-                onError={e => { e.target.style.display="none"; e.target.parentNode.innerHTML='<span style="font-size:4rem;display:flex;align-items:center;justify-content:center;width:100%;height:100%">👨‍💻</span>'; }}
-                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
+              {imgOk ? (
+                <img src="/profile.jpg" alt="Abdullah Al Mahmud"
+                  onError={() => setImgOk(false)}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
+              ) : (
+                <span style={{ fontSize: "4rem", display: "flex", alignItems: "center", justifyContent: "center", width: "100%", height: "100%" }}>👨‍💻</span>
+              )}
               <div style={{
                 position: "absolute", bottom: "12px", left: "50%", transform: "translateX(-50%)",
                 background: "linear-gradient(135deg, #6366f1, #a855f7)",
@@ -487,7 +527,7 @@ export default function Home() {
               Passionate Coder & Lifelong Learner
             </h3>
             <p style={{ color: "#64748b", lineHeight: 1.8, marginBottom: "1rem", fontSize: "0.93rem" }}>
-              I'm Abdullah Al Mahmud, a Full Stack Software Engineer with expertise in building scalable web applications.
+              I&apos;m Abdullah Al Mahmud, a Full Stack Software Engineer with expertise in building scalable web applications.
               I specialize in the MERN stack and love creating clean, efficient, and user-friendly solutions.
             </p>
             <p style={{ color: "#64748b", lineHeight: 1.8, marginBottom: "1.5rem", fontSize: "0.93rem" }}>
@@ -896,7 +936,7 @@ export default function Home() {
         <div style={{ textAlign: "center", marginBottom: "3rem" }}>
           <p style={{ color: "#6366f1", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "0.5rem" }}>Get In Touch</p>
           <h2 className="section-title gradient-text" style={{ fontSize: "2rem", fontWeight: 700 }}>Contact Me</h2>
-          <p style={{ color: "#64748b", fontSize: "0.92rem" }}>Have a project in mind? Let's build something great together.</p>
+          <p style={{ color: "#64748b", fontSize: "0.92rem" }}>Have a project in mind? Let&apos;s build something great together.</p>
         </div>
 
         <div className="contact-info-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
@@ -1118,6 +1158,41 @@ export default function Home() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CV / RESUME */}
+      <section id="cv" className="section-pad" style={{ padding: "6rem 1.5rem", maxWidth: "1000px", margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBottom: "3rem" }}>
+          <p style={{ color: "#6366f1", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "0.5rem" }}>Resume</p>
+          <h2 className="section-title gradient-text" style={{ fontSize: "2rem", fontWeight: 700 }}>My CV</h2>
+          <p style={{ color: "#64748b", fontSize: "0.92rem", marginTop: "0.5rem", maxWidth: "600px", margin: "0.5rem auto 0" }}>
+            Download my latest resume or preview it directly below.
+          </p>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem", alignItems: "stretch" }} className="about-grid">
+          <div className="project-card" style={{ borderRadius: "16px", padding: "2rem", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <div style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>📄</div>
+            <h3 style={{ fontSize: "1.25rem", fontWeight: 700, color: "#e2e8f0", marginBottom: "0.6rem" }}>Abdullah Al Mahmud</h3>
+            <p style={{ color: "#64748b", fontSize: "0.9rem", lineHeight: 1.7, marginBottom: "1.2rem" }}>
+              Full Stack Software Engineer (MERN) — 2+ years experience building scalable web apps,
+              REST APIs, and modern responsive UIs. BSc in CSE, Varendra University.
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1.5rem" }}>
+              {["MERN Stack", "REST API", "Next.js", "AI Integration"].map(t => (
+                <span key={t} style={{ background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.25)", color: "#a5b4fc", padding: "0.3rem 0.8rem", borderRadius: "20px", fontSize: "0.78rem", fontWeight: 600 }}>{t}</span>
+              ))}
+            </div>
+            <div style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap" }}>
+              <a href={CV_FILE} download="Abdullah-Al-Mahmud-CV.pdf" className="btn-primary" style={{ padding: "0.8rem 1.6rem", borderRadius: "10px", color: "#fff", textDecoration: "none", fontWeight: 700, fontSize: "0.9rem" }}>⬇️ Download CV</a>
+              <a href={CV_FILE} target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ padding: "0.8rem 1.6rem", borderRadius: "10px", textDecoration: "none", fontWeight: 700, fontSize: "0.9rem" }}>👁️ View PDF</a>
+            </div>
+          </div>
+
+          <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: "16px", overflow: "hidden", minHeight: "420px" }}>
+            <iframe src={CV_FILE} title="Abdullah Al Mahmud CV" style={{ width: "100%", height: "420px", border: "none" }} />
           </div>
         </div>
       </section>
