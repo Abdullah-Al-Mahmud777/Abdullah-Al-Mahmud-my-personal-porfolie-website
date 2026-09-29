@@ -12,7 +12,6 @@ const WORK_EXPERIENCE = [
     role: "Software Engineer",
     company: "Odyssey Tech",
     location: "London, UK (Remote)",
-    period: "06/2024 – 02/2025",
     responsibilities: [
       "Developed scalable and maintainable software solutions aligned with business requirements.",
       "Optimized application performance, reliability, and functionality.",
@@ -26,7 +25,6 @@ const WORK_EXPERIENCE = [
     role: "Frontend Developer",
     company: "RajFlix Solutions",
     location: "Rajshahi, Bangladesh",
-    period: "02/2023 – 05/2024",
     responsibilities: [
       "Developed responsive, user-friendly web interfaces and optimized loading speeds for better performance.",
       "Integrated REST APIs in collaboration with backend teams and implemented modern UI/UX layouts.",
@@ -38,7 +36,7 @@ const WORK_EXPERIENCE = [
     role: "IT Support Engineer",
     company: "RajFlix Solutions",
     location: "Rajshahi, Bangladesh",
-    period: "02/2023 – 05/2024",
+   
     responsibilities: [
       "Provided technical support for hardware, software, operating systems, and network connectivity issues.",
       "Installed, configured, and maintained computers, software applications, peripherals, and IT equipment.",
